@@ -15,17 +15,14 @@ class LoginView(ObtainAuthToken):
         ser=Login_Serializer(data=request.data)
         if ser.is_valid():
             email=ser.validated_data['email']
-            user=get_object_or_404(UserDetails,email=email)
+            password=ser.validated_data['password']
+            user=authenticate(username=email,password=password)
             if user:
                 if user.is_active:
-                    password=ser.validated_data['password']
-                    user=authenticate(username=email,password=password)
-                    if user:
-                        token,created=Token.objects.get_or_create(user=user)
-                        print(1)
-                        return Response({"status":True, "token":token.key,"registed":user.registered})
-                    else:
-                        return Response({"status":False, "msg":"Wrong Password"})
+                    token,created=Token.objects.get_or_create(user=user)
+                    print(1)
+                    return Response({"status":True, "token":token.key,"registed":user.registered})
+                        
                 else:
                     OTP.sendemailOTP(user)
                     OTP.sendsmsOTP(user)
@@ -33,5 +30,5 @@ class LoginView(ObtainAuthToken):
                     return Response({"status":False,"msg":"User Not Verified"})
             else:
                 print(3)
-                return Response({"status":False,"msg":"Unknown User"})
+                return Response({"status":False, "msg":"Wrong Email/Password"})
             
