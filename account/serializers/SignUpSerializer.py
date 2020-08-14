@@ -13,3 +13,7 @@ class UserPersonalDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model=UserPersonalDetails
         fields=["pan","aadhar"]
+
+class MarkRegisteredSerializer(serializers.Serializer):
+    email=serializers.EmailField()
+    registered=serializers.BooleanField()

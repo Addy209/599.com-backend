@@ -1,4 +1,4 @@
-from account.serializers.SignUpSerializer import SignUpSerializers,UserPersonalDetailsSerializer
+from account.serializers.SignUpSerializer import MarkRegisteredSerializer, SignUpSerializers,UserPersonalDetailsSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
@@ -27,3 +27,24 @@ class SignupView(APIView):
         else:
             print(user_details.errors)
             return Response({"error":user_details.errors}, status=500)
+    
+
+class MarkRegistered(APIView):
+    def post(self, request):
+        ser=MarkRegisteredSerializer(data=request.data)
+        if ser.is_valid():
+            if ser.validated_data['registered']:
+                user_instance=get_object_or_404(UserDetails,email=ser.validated_data['email'])
+                if not user_instance.registered:
+                    user_instance.registered=True
+                    user_instance.save()
+                    return Response({"status":True, "registered":user_instance.registered, "msg":"Registered Successfully"})
+                
+                else:
+                    return Response({"status":False, "msg":"User Already Registered"})
+            
+            else:
+                return Response({"status":False, "msg":"Payment was unsuccessful"})
+        else:
+            return Response({"status": False, "msg":ser.errors})
+            

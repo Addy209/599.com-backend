@@ -14,8 +14,12 @@ class ClubView(APIView):
         ser=ClubSerializer(data=request.data)
         print(ser)
         if ser.is_valid():
-            ser.save()
+            try:
+                ser.save()
+            except Exception as e:
+                print(str(e))
+                return Response({"status":False, "msg":str(e)})
         else:
-            print(ser.errors)
+            return Response({"status":False, "msg":ser.errors})
 
         return Response({"status":True, "msg":"Tree Created Successfully"})
