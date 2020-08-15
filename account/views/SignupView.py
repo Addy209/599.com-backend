@@ -47,4 +47,5 @@ class MarkRegistered(APIView):
                 return Response({"status":False, "msg":"Payment was unsuccessful"})
         else:
             return Response({"status": False, "msg":ser.errors})
-            
+
+        
