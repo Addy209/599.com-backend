@@ -1,3 +1,4 @@
+from account.views.TransactionView import GetTransactionIdView
 from account.views.UserDetailsView import GetUserDetails
 from account.views.LoginView import LoginView
 from account.views.OTPView import EmailOTPVerify, SmsOTPVerify
@@ -14,4 +15,6 @@ urlpatterns = [
     path('api-token-login/', LoginView.as_view()),
     path('registeruser/', MarkRegistered.as_view()),
     path('getuserdetails/', GetUserDetails.as_view()),
+    # path('gettransactionordernumber/', GetTransactionIdView.as_view()),
+    # path('gettransactionordernumber/<str:pk>', GetTransactionIdView.as_view()),
 ]

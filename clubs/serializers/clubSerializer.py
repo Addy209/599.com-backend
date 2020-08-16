@@ -37,9 +37,6 @@ class ClubSerializer(serializers.Serializer):
         print(attrs)
         return attrs
 
-
-
-
     
     def save(self):
         print("Hello from save",self.validated_data['parent'])
@@ -60,6 +57,10 @@ class ClubSerializer(serializers.Serializer):
 
         clb=Club(**self.validated_data)
         clb.save()
+
+class GetClubDetailsSerializer(serializers.Serializer):
+    grandparent_id=serializers.CharField()
+    parent_id=serializers.IntegerField()
         
 
 

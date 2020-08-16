@@ -20,7 +20,7 @@ class UserDetails(AbstractBaseUser,PermissionsMixin):
     occupation=models.CharField(max_length=25,choices=occupation_choices)
     registered=models.BooleanField(default=False)
     is_staff=models.BooleanField(default=False)
-    is_active=models.BooleanField(default=False)
+    is_active=models.BooleanField(default=True)
 
     objects=CustomUserManager()
 
@@ -66,5 +66,13 @@ class EMAIL_OTP(models.Model):
         return self.user.email+" "+str(self.otp)
 
 
+class Transaction(models.Model):
+    transaction_id=models.UUIDField(primary_key=True, default=uuid.uuid4)
+    user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.PROTECT)
+    paid=models.BooleanField(default=False)
+    amount=models.IntegerField()
+    date=models.DateTimeField(auto_now_add=True)
 
+    def __str__(self) -> str:
+        return self.user.email+" for the amount ₹"+str(self.amount)
     
