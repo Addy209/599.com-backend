@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MEDIA_DIR=os.path.join(BASE_DIR,"Media")
 
 
 # Quick-start development settings - unsuitable for production
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
 
     'account',
     'clubs',
+    'Transaction',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
@@ -125,7 +127,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_ROOT=MEDIA_DIR
+MEDIA_URL='/media/'
 #
 AUTH_USER_MODEL = 'account.UserDetails'
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+SERVER_URL_ROOT='http://localhost:8000/'

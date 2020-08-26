@@ -1,3 +1,4 @@
+from enum import unique
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from account.manager.manager import CustomUserManager
 from django.db import models
@@ -42,12 +43,23 @@ class UserDetails(AbstractBaseUser,PermissionsMixin):
         return self.first_name
 
 class UserPersonalDetails(models.Model):
-    user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
-    pan=models.CharField(max_length=25, unique=True)
+    user=models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    pan=models.CharField(max_length=25, blank=True, unique=True)
     aadhar=models.CharField(max_length=25, unique=True)
 
     def __str__(self) -> str:
         return self.user.get_full_name
+    
+class UserBankDetails(models.Model):
+    user=models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    bank_name=models.CharField(max_length=255)
+    branch_name=models.CharField(max_length=255)
+    account_number=models.CharField(max_length=255)
+    ifsc_code=models.CharField(max_length=255)
+    account_holder_name=models.CharField(max_length=255, blank=True)
+
+    def __str__(self) -> str:
+        return self.user.get_full_name+"-->"+self.bank_name+"-->"+self.branch_name+"-->"+self.account_holder_name
 
 class SMS_OTP(models.Model):
     user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
@@ -64,15 +76,4 @@ class EMAIL_OTP(models.Model):
 
     def __str__(self) -> str:
         return self.user.email+" "+str(self.otp)
-
-
-class Transaction(models.Model):
-    transaction_id=models.UUIDField(primary_key=True, default=uuid.uuid4)
-    user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.PROTECT)
-    paid=models.BooleanField(default=False)
-    amount=models.IntegerField()
-    date=models.DateTimeField(auto_now_add=True)
-
-    def __str__(self) -> str:
-        return self.user.email+" for the amount ₹"+str(self.amount)
     

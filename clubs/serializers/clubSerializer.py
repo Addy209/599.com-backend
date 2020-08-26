@@ -59,8 +59,9 @@ class ClubSerializer(serializers.Serializer):
         clb.save()
 
 class GetClubDetailsSerializer(serializers.Serializer):
-    grandparent_id=serializers.CharField()
-    parent_id=serializers.IntegerField()
+    grandparent_id=serializers.CharField(required=False,allow_null=True)
+    parent_id=serializers.CharField(required=False,allow_null=True)
+    
         
 
 

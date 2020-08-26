@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  Club, Club1000
+from .models import  Club, ClubPayment
 # Register your models here.
 admin.site.register(Club)
-admin.site.register(Club1000)
+admin.site.register(ClubPayment)
