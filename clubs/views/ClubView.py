@@ -42,10 +42,10 @@ class GetClubDetailsView(APIView):
             print(ser.data)
             parent,grandparent=None,None
             if ser.validated_data['grandparent_id']:
-                gper=requests.get('http://localhost:8000/account/getuserdetails/'+ser.validated_data['grandparent_id'])
+                gper=requests.get('https://fiveninitynine.herokuapp.com/account/getuserdetails/'+ser.validated_data['grandparent_id'])
                 grandparent=json.loads(gper.text)
             if ser.validated_data['parent_id']:
-                per=requests.get('http://localhost:8000/account/getuserdetails/'+ser.validated_data['parent_id'])
+                per=requests.get('https://fiveninitynine.herokuapp.com/account/getuserdetails/'+ser.validated_data['parent_id'])
                 parent=json.loads(per.text)           
             
             return Response({"status":True, "parent":parent, 'grandparent':grandparent})
