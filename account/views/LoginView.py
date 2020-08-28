@@ -19,18 +19,18 @@ class LoginView(ObtainAuthToken):
             user=authenticate(username=email,password=password)
             if user:
                 if user.is_active:
-                    if user.registered:
-                        token,created=Token.objects.get_or_create(user=user)
-                        print(1)
-                        return Response({"status":True, "token":token.key,"registered":user.registered})
-                    else:   
-                        return Response({"status":False,"registered":user.registered,"msg":"User Has not paid registration amount!"})
+                    #if user.registered:
+                    token,created=Token.objects.get_or_create(user=user)
+                    print(1)
+                    return Response({"status":True, "token":token.key,"registered":user.registered})
+                    # else:   
+                    #     return Response({"status":False,"registered":user.registered,"msg":"User Has not paid registration amount!"})
                         
                 else:
-                    OTP.sendemailOTP(user)
-                    OTP.sendsmsOTP(user)
-                    print(2)
-                    return Response({"status":False,"msg":"User Not Verified"})
+                    # OTP.sendemailOTP(user)
+                    # OTP.sendsmsOTP(user)
+                    # print(2)
+                    return Response({"status":False,"msg":"User Not Acitve"})
             else:
                 print(3)
                 return Response({"status":False, "msg":"Wrong Email or Password"})
