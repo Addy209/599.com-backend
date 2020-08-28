@@ -25,7 +25,7 @@ STATIC_DIR=os.path.join(BASE_DIR, 'Static')
 SECRET_KEY = '0s%6y77ejrcd$41hk%rur=*k6l%v^ubl*3y-y50(9ky@%*fl+m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['fiveninitynine.herokuapp.com']
 
