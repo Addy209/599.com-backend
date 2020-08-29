@@ -68,10 +68,13 @@ class ClubSerializer(serializers.Serializer):
         user_obj,obj=None,None
         try:
             obj=get_object_or_404(Club,user=self.validated_data['parent'])
-            user_obj=get_object_or_404(Club,user=self.validated_data['user'])
         except Exception as e:
             pass
 
+        try:
+            user_obj=get_object_or_404(Club,user=self.validated_data['user'])
+        except Exception as e:
+            pass
 
         if user_obj and obj:
             print(user_obj.id,obj.id)
@@ -93,9 +96,9 @@ class ClubSerializer(serializers.Serializer):
         else:
             raise Exception('Refered User does not exist')
         
-
-        clb=Club(**self.validated_data)
-        clb.save()
+        if not user_obj:
+            clb=Club(**self.validated_data)
+            clb.save()
 
 class GetClubDetailsSerializer(serializers.Serializer):
     grandparent_id=serializers.CharField(required=False,allow_null=True)
