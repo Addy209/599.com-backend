@@ -20,7 +20,7 @@ class SignupView(APIView):
                 personal_details.save(user=user)
                 #OTP.sendemailOTP(user)
                 #OTP.sendsmsOTP(user)
-                return Response({"status":True,"msg":"User Created!",'token':"token"}) #; To activate your account please verify the OTP
+                return Response({"status":True,"msg":"User Created!"}) #; To activate your account please verify the OTP
             else:
                 return Response({"error":personal_details.error})
 
