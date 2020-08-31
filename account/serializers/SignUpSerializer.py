@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework import fields
-from account.models import UserDetails, UserPersonalDetails
+from account.models import UserDetails, UserPersonalDetails, UserRegistrationStatusDetails
 
 class SignUpSerializers(serializers.ModelSerializer):
     class Meta:
@@ -17,3 +17,8 @@ class UserPersonalDetailsSerializer(serializers.ModelSerializer):
 class MarkRegisteredSerializer(serializers.Serializer):
     email=serializers.EmailField()
     registered=serializers.BooleanField()
+
+class UserRegistrationStatusDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=UserRegistrationStatusDetails
+        fields='__all__'

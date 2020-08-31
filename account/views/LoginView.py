@@ -22,7 +22,7 @@ class LoginView(ObtainAuthToken):
                     #if user.registered:
                     token,created=Token.objects.get_or_create(user=user)
                     print(1)
-                    return Response({"status":True, "token":token.key,"registered":user.registered})
+                    return Response({"status":True, "token":token.key,"registered":user.registered, 'grandparent_paid':user.grandparent_paid,'parent_paid':user.parent_paid})
                     # else:   
                     #     return Response({"status":False,"registered":user.registered,"msg":"User Has not paid registration amount!"})
                         

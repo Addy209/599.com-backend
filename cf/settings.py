@@ -43,7 +43,10 @@ INSTALLED_APPS = [
     'account',
     'clubs',
     'Transaction',
+
+
     'corsheaders',
+    'cloudinary',
     'rest_framework',
     'rest_framework.authtoken',
 ]

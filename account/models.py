@@ -2,9 +2,11 @@ from enum import unique
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from account.manager.manager import CustomUserManager
 from django.db import models
-from utils.constants import gender_choices,qualification_choices,occupation_choices
+from utils.constants import gender_choices, payment_choices,qualification_choices,occupation_choices
 from django.conf import settings
 import uuid
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -20,6 +22,8 @@ class UserDetails(AbstractBaseUser,PermissionsMixin):
     qualification=models.CharField(max_length=25,choices=qualification_choices)
     occupation=models.CharField(max_length=25,choices=occupation_choices)
     registered=models.BooleanField(default=False)
+    parent_paid=models.BooleanField(default=False)
+    grandparent_paid=models.BooleanField(default=False)
     is_staff=models.BooleanField(default=False)
     is_active=models.BooleanField(default=True)
 
@@ -60,6 +64,26 @@ class UserBankDetails(models.Model):
 
     def __str__(self) -> str:
         return self.user.get_full_name+"-->"+self.bank_name+"-->"+self.branch_name+"-->"+self.account_holder_name
+
+class UserRegistrationStatusDetails(models.Model):
+    user=models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.PROTECT)
+    payment_status=models.CharField(max_length=255, choices=payment_choices, default='unpaid')
+    ss_url=models.URLField()
+
+    def __str__(self) -> str:
+        return self.user.get_full_name+" "+self.payment_status
+
+@receiver(post_save,sender=UserRegistrationStatusDetails)
+def registerUser(sender, instance,  created, **kwargs):
+    print("in signals")
+    if not created:
+        user=instance.user
+        if instance.payment_status=='paid':
+            user.registered=True
+        else:
+            user.registered=False
+        user.save()
+
 
 class SMS_OTP(models.Model):
     user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)

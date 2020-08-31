@@ -4,3 +4,6 @@ occupation_choices=[['student','student'],['employed','employed'],['unemployed',
 payment_choices=[['unpaid', 'unpaid'],['pending','pending'],['paid','paid']]
 razorpay_id="rzp_test_s1WwMpFsnjvzdP"#"rzp_test_GP7hCrPCLZN5V5"
 razorpay_pass="YML3iLiwZb7HpY9dvJoP2qFH"#"WaGtzJA3vHOZRAHBAuHM8wbI"
+cloudinary_id="266315674383315"
+cloudinary_pass="uCfBekQy6Op6c7uC3Too07wEavs"
+cloud_name="addy209"
