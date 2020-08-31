@@ -43,7 +43,11 @@ class UserPaymentView(APIView):
         api_key = cloudinary_id, 
         api_secret = cloudinary_pass 
         )
-        resp=cloudinary.uploader.upload(photo, folder='Media/registration/'+request.user.email)
+        resp=None
+        try:
+            resp=cloudinary.uploader.upload(photo, folder='Media/registration/'+request.user.email)
+        except Exception as e:
+            return Response({'status':False, 'error':str(e)})
         data=None
         try:
             data={

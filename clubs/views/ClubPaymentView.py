@@ -23,7 +23,11 @@ class GrandParentPaymentView(APIView):
         api_key = cloudinary_id, 
         api_secret = cloudinary_pass 
         )
-        resp=cloudinary.uploader.upload(photo, folder='Media/Payments/'+request.user.email+'/'+club.grandparent.email)
+        resp=None
+        try:
+            resp=cloudinary.uploader.upload(photo, folder='Media/Payments/'+request.user.email+'/'+club.grandparent.email)
+        except Exception as e:
+            return Response({'status':False, 'error':str(e)})
         data=None
         try:
             data={
@@ -62,7 +66,11 @@ class ParentPaymentView(APIView):
         api_key = cloudinary_id, 
         api_secret = cloudinary_pass 
         )
-        resp=cloudinary.uploader.upload(photo, folder='Media/Payments/'+request.user.email+'/'+club.parent.email)
+        resp=None
+        try:
+            resp=cloudinary.uploader.upload(photo, folder='Media/Payments/'+request.user.email+'/'+club.parent.email)
+        except Exception as e:
+            return Response({'status':False, 'error':str(e)})
         data=None
         try:
             data={
