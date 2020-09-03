@@ -24,6 +24,7 @@ class PersonalDetailsAdmin(admin.ModelAdmin):
 class BankDetailsAdmin(admin.ModelAdmin):
     list_display=('user','account_holder_name','bank_name','branch_name','ifsc_code')
     search_fields=('account_holder_name','bank_name','branch_name','ifsc_code')
+    autocomplete_fields=('user',)
     readonly_fields=()
     filter_horizontal=()
     list_filter=()
