@@ -88,25 +88,10 @@ WSGI_APPLICATION = 'cf.wsgi.application'
 
 DATABASES = {
     'default': {
-        # MySQL database engine class.
-        'ENGINE': 'django.db.backends.mysql',
-        # MySQL database host ip.
-        'HOST': 'remotemysql.com',
-        # port number.
-        'PORT': '3306',
-        # database name.
-        'NAME': '9TOQnDySGs',
-        # user name.
-        'USER': '9TOQnDySGs',
-        # password
-        'PASSWORD': 'yX1Co5kyKl',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            'charset': 'utf8mb4',
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 
 # Password validation
