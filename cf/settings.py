@@ -25,9 +25,9 @@ STATIC_DIR=os.path.join(BASE_DIR, 'Static')
 SECRET_KEY = '0s%6y77ejrcd$41hk%rur=*k6l%v^ubl*3y-y50(9ky@%*fl+m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['fiveninitynine.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -88,10 +88,25 @@ WSGI_APPLICATION = 'cf.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # MySQL database engine class.
+        'ENGINE': 'django.db.backends.mysql',
+        # MySQL database host ip.
+        'HOST': 'remotemysql.com',
+        # port number.
+        'PORT': '3306',
+        # database name.
+        'NAME': '9TOQnDySGs',
+        # user name.
+        'USER': '9TOQnDySGs',
+        # password
+        'PASSWORD': 'yX1Co5kyKl',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+        }
     }
 }
+
 
 
 # Password validation

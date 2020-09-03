@@ -1,38 +1,35 @@
-from django.test import TestCase
-import razorpay
-import requests
-import json
-# Create your tests here.
-client = razorpay.Client(auth=("rzp_test_GP7hCrPCLZN5V5", "WaGtzJA3vHOZRAHBAuHM8wbI"))
+def doSomeCheck(str1,str2):
+  newPass=None
+  for i in range(len(str1)):
+    for j in range(i+1,len(str2)):
+      if str1[i]==str2[j]:
+        if not (i+j)%2:
+          newPass=str2[0:i]+str2[j]+str2[i+1:j]+str2[i]+str2[j+1:]
+          str2=newPass
+          if str1==str2:
+            return 1
+  return 0
 
-# resp=client.order.create(amount=5000, currency='INR', payment_capture='1')
+def checkPassword(n,arr):
+  if n==1:
+    return 1
+  else:
+    count=0
+    for i in range(n):
+      checkCount=0
+      for j in range(i+1,n):
+        if len(arr[i]) != len(arr[j]):
+          checkCount+=1
+          break;
+        checkCount+=doSomeCheck(arr[i],arr[j])
+      if checkCount>0:
+        count+=1
+  return n-count
 
-# print(resp)
-
-# order_amount = 50000
-# order_currency = 'INR'
-# order_receipt = 'order_rcptid_11'
-# notes = {'Shipping address': 'Bommanahalli, Bangalore'}   # OPTIONAL
-
-# client.order.create(amount=order_amount, currency=order_currency, receipt=order_receipt, notes=notes, payment_capture='1')
-
-# order_amount = 50000
-# order_currency = 'INR'
-# order_receipt = 'order_rcptid_11'
-# notes = {'Shipping address': 'Bommanahalli, Bangalore'}   # OPTIONAL
-# client.order.create(amount=order_amount, currency=order_currency, receipt=order_receipt, notes=notes, payment_capture='1')
-
-#https://api.razorpay.com/v1/orders
-
-data={
-    "amount":51578*100,
-  "currency":"INR",
-}
-
-resp=requests.post('https://api.razorpay.com/v1/orders', data, auth=("rzp_test_GP7hCrPCLZN5V5", "WaGtzJA3vHOZRAHBAuHM8wbI" ))
-
-print(resp.text)
-
-jsonResp=json.dumps(resp.text)
-
-print(jsonResp)
+if __name__=='__main__':
+  str2='abcdefg'
+  i,j=0,5
+  newPass=str2[j]+str2[0:i]+str2[i+1:j]+str2[i]+str2[j+1:]
+  print(newPass)
+  val=checkPassword(7,['abcd','cbad','adcb','cdab','jklm','lkjm','mklo'])
+  print(val)
