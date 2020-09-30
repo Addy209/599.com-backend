@@ -57,9 +57,20 @@ class UserPaymentView(APIView):
             }
         except  Exception as e:
             return Response({'status':False,"error":str(e),"msg":"Screenshot NOT Uploaded Successfully"})
-        ser=UserRegistrationStatusDetailsSerializer(data=data)
+        obj=None
+        try:
+            obj=get_object_or_404(UserRegistrationStatusDetails, user=request.user)
+            print(obj)
+        except Exception as e:
+            pass
+        ser=None
+        if obj:
+            ser=UserRegistrationStatusDetailsSerializer(obj,data=data)
+        else:
+            ser=UserRegistrationStatusDetailsSerializer(data=data)
         if ser.is_valid():
             ser.save()
             return Response({'status':True,"msg":"Screenshot Uploaded Successfully"})
         else:
-            return Response({'status':False,"msg":"Screenshot NOT Uploaded Successfully"})
+            print(ser.errors)
+            return Response({'status':False,"errors":ser.errors,"msg":"Screenshot NOT uploaded"})
