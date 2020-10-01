@@ -48,7 +48,7 @@ class UserDetails(AbstractBaseUser,PermissionsMixin):
 
 class UserPersonalDetails(models.Model):
     user=models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
-    pan=models.CharField(max_length=25, blank=True, unique=True)
+    pan=models.CharField(max_length=25, blank=True)
     aadhar=models.CharField(max_length=25, unique=True)
 
     def __str__(self) -> str:
